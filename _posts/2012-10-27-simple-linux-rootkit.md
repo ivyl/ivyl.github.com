@@ -49,7 +49,7 @@ writing, we issue commands. Entry is hidden in same manner as other files.
 
 
 ### Code
-Since it's to long to include it in-line on blog,
+Since it's too long to include it in-line on blog,
 [here's](https://gist.github.com/3964594#file_rt.c) full source code with
 additional commentary.
 
