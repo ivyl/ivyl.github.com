@@ -10,7 +10,7 @@ pygments: true
 # so be sure to set them if your theme uses them.
 #
 title : Ivyl's devlog
-tagline: Ruby, Java and Linux wizardry
+tagline: Ruby, Java and Linux Wizardry
 author :
   name : Arkadiusz Hiler
   email : ivyl@sigillum.cc

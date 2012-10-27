@@ -35,4 +35,5 @@ them with comprehensive READMEs. Enjoy!
 
 ## Credits
 [Blag's source](https://github.com/ivyl/ivyl.github.com) is available.
-Using [Jekyll](https://github.com/mojombo/jekyll) and [JekyllBootstrap](http://jekyllbootstrap.com/).
+
+I'm using [Jekyll](https://github.com/mojombo/jekyll) and [JekyllBootstrap](http://jekyllbootstrap.com/).

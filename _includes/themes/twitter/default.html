@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>{{ page.title }} - {{ page.tagline }}</title>
+        <title>{{ page.title }} :: Ivyl's Devlog</title>
         {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
         <meta name="author" content="{{ site.author.name }}">
 
@@ -29,6 +29,7 @@
                         {% assign pages_list = site.pages %}
                         {% assign group = 'navigation' %}
                         {% include JB/pages_list %}
+                        <li><a href="/atom.xml">Feed</a></li>
                     </ul>
                 </div>
             </div>
@@ -67,9 +68,9 @@
                     </div>
                     <div class="span6">
                         <h3>About</h3>
-                        <span class="about">
+                        <div class="about">
                             I'm fighting in informatics field. My wepons of choice are C, Java, Ruby, Scala and *nix systems. They are sharp and deadly thanks to Vim ans ZSH. Beware.
-                        </span>
+                        </div>
                             
                     </div>
                 </div>
