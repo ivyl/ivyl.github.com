@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Simple Linux Rootkit"
-category: kernel
 tags: [linux, kernel, c]
 ---
 {% include JB/setup %}
