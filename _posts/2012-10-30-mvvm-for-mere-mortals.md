@@ -7,9 +7,9 @@ tags: [c#, mvvm, dotnet, wpf]
 
 ## Oh wow, C#? .NET? WPF?!
 
-You won't hear from me on this topic very often, it's just not my world.
-Recently I had to do few thing in mentioned technology and I spent waaaaay too
-much time trying to deal with it, and after all it rendered as simple.
+You won't hear from me on those topics very often. Recently I had to do few
+thing in mentioned technology and I spent waaaaay too much time trying to
+deal with it, and after all it rendered as simple.
 
 ## What's the fuss?
 
