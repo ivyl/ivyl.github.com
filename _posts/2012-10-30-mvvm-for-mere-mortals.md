@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MVVM for Mere Mortals"
+title: "The MVVM Way For Mere Mortals"
 tags: [c#, mvvm, dotnet, wpf]
 ---
 {% include JB/setup %}
@@ -24,6 +24,13 @@ understand in one reading. I'll try to fix it, especially for someone who
 isn't from .NET aristocracy.
 
 ## MVVM explained
+
+This won't be about full-blown MVVM framework, this will be about the concept
+and simple from scratch implementation. Transition from Windows Form to WPF
+seems hard to most people. You can write forms-style in WPF but that's just
+wrong. We are given other, much powerful means. You will learn all about
+bindings, how ViewModel works, what it does, and how to do things proper-ly.
+After that you will have intuitions good enough to dive into framework.
 
 I assume that you know your MVC. It belongs to common knowledge nowadays and
 it's well explored. If you don't know [grab your copy of Wikipedia's
@@ -199,7 +206,7 @@ We can then bind property given below to button's command:
 public ICommand MyCommand { get { return new Command(MyExecute, MyCanExecute);  } }
 {% endhighlight %}
 
-If insted of CanExecute we supply constructor with *null*, then button is
+If instead of CanExecute we supply constructor with *null*, then button is
 active all the time.
 
 ### Collections
@@ -264,6 +271,11 @@ That's all. I hope that you now have some intuition on this whole MVVM thing
 and know how to bite it. Mind that those things are absolute basics and if
 you interested in this topic you should use other resources.
 
+Now you should see appeal of this approach. ViewModel holds all the logic and
+is connected to Window through binding only. We can easily unit test the hell
+out of it, which would be nearly impossible with forms-style implementation
+(whether you write it in Windows Forms or WPF).
+
 ## Few Advices
 
 They come from my little experience, and they come free.
@@ -291,9 +303,12 @@ good intuition on it.
 
 ### Don't write it by hand
 
-I shown you how to write it by hand. It has educational appeal but
+I've shown you how to write it from scratch. It has educational appeal but
 there's easier way that somewhat reduces complexity. Use something like [MVVM
-Light Toolkit](http://mvvmlight.codeplex.com/) next time. I heard that Prism is
-also fine, but it's overall complexity scares me. Look for cool
+Light Toolkit](http://mvvmlight.codeplex.com/) next time. I heard that Prism
+is also fine, but it's overall complexity scares me.  If you want write big
+application in a manner described above - don't. After some time it would
+become unmanageable. You don't write you MVC site from scratch either. WPF
+gives us cool tools, but they only cover basics. Look for cool
 macros/snippets too.
 
