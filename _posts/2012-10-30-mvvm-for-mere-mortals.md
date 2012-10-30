@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The MVVM Way For Mere Mortals"
+title: "MVVM For Mere Mortals"
 tags: [c#, mvvm, dotnet, wpf]
 ---
 {% include JB/setup %}
@@ -25,12 +25,15 @@ isn't from .NET aristocracy.
 
 ## MVVM explained
 
-This won't be about full-blown MVVM framework, this will be about the concept
-and simple from scratch implementation. Transition from Windows Form to WPF
-seems hard to most people. You can write forms-style in WPF but that's just
-wrong. We are given other, much powerful means. You will learn all about
-bindings, how ViewModel works, what it does, and how to do things proper-ly.
-After that you will have intuitions good enough to dive into framework.
+I won't cover full-blown MVVM framework. This post will be about the concept.
+Treat it as introduction. We will write simple implementation from scratch to
+get used to few new things and the new way of thinking.
+
+Transition from Windows Form to WPF seems hard to most people. You can write
+forms-style in WPF, but that's just wrong. We are given other, way more
+powerful means. You will learn all about bindings, how ViewModel works, what
+it does, and how to do things proper-ly. After that, I believe, you will have
+intuitions good enough to dive into framework.
 
 I assume that you know your MVC. It belongs to common knowledge nowadays and
 it's well explored. If you don't know [grab your copy of Wikipedia's
