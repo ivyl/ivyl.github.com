@@ -98,6 +98,10 @@ footer a, footer a:visited {
     color: #aaa;
 }
 
+p {
+    text-align: justify;
+}
+
 footer .about {
     line-height: 110%;
     font-size: 85%;
