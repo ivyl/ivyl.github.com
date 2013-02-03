@@ -27,10 +27,10 @@ back.
 I find frameworks such as
 [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) and
 [grml](http://grml.org/zsh/) (which I seen referred as The Missing Zsh
-Default Configuration) bloated. I hand tailored [my
+Default Configuration) bloated. I hand-tailored [my
 Zsh](https://github.com/ivyl/zsh-config) to be no more and no
-less what I expect it to be. I want to share few I stumbled upon on the
-internet/comprehensive Zsh man pages. You won't find common/obvious stuff
+less what I expect it to be. I want to share few things I stumbled upon on the
+internet/comprehensive Zsh man pages or set up myself. You won't find common/obvious stuff
 like setting completion/prompt right though. I want to focus on bit more
 obscure features.
 
@@ -41,6 +41,8 @@ fun.
 file](https://github.com/ivyl/zsh-config/blob/master/colors.zsh).
 
 **NOTE2:** setting Zsh options is done by `setopt OPTION`.
+
+**NOTE3:** I'm aware that some of things mentioned here works in bash as well.
 
 ## Tricks worth knowing
 
@@ -294,6 +296,9 @@ bindkey '^h' backward-delete-char
 
 # ctrl-w removed word backwards
 bindkey '^w' backward-kill-word
+
+# ctrl-r starts searching history backward
+bindkey '^r' history-incremental-search-backward
 {% endhighlight %}
 
 Other big enhancment is prompt that tells us which mode we are in by cursor
