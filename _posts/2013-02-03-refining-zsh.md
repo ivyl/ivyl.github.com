@@ -31,11 +31,11 @@ Default Configuration) bloated. I hand-tailored [my
 Zsh](https://github.com/ivyl/zsh-config) to be no more and no
 less what I expect it to be. I want to share few things I stumbled upon on the
 internet/comprehensive Zsh man pages or set up myself. You won't find common/obvious stuff
-like setting completion/prompt right though. I want to focus on bit more
-obscure features.
+like setting completion/prompt/global aliases though. I want to focus on bit more
+obscure things.
 
-I hope you will find something interesting here, that will make you work more
-fun.
+I collected few features Zsh I use every day. I hope you will find something
+interesting in here, something that will make you work more fun and efficient.
 
 **NOTE:** Color definitions seen below are from [this
 file](https://github.com/ivyl/zsh-config/blob/master/colors.zsh).
@@ -43,6 +43,8 @@ file](https://github.com/ivyl/zsh-config/blob/master/colors.zsh).
 **NOTE2:** setting Zsh options is done by `setopt OPTION`.
 
 **NOTE3:** I'm aware that some of things mentioned here works in bash as well.
+
+**NOTE4:** I added few things mentioned in reddit comments.
 
 ## Tricks worth knowing
 
@@ -86,6 +88,7 @@ Which makes stdin/err redirections much easier:
 \time ls > file.stdin 2> file.stderr
 {% endhighlight %}
 
+See **MULTIOS** option. It's on by default.
 
 ### Last command
 
@@ -164,6 +167,12 @@ ls -l `which grep`<TAB>
 ls -l =grep<TAB>
 {% endhighlight %}
 
+You can do that with abbreviated paths too:
+
+{% highlight sh %}
+cd /u/sh/zsh<TAB> #=> cd /usr/share/zsh
+{% endhighlight %}
+
 I find it useful to peek on what is done before command will be executed.
 Sometimes I find removing one match from list easier than constructing fancy
 pattern.
@@ -184,7 +193,7 @@ grep pattern **/*(.)
 
 `(/)` does the same with directories:
 {% highlight sh %}
-for i in **/*(/); echo $i
+print -l **/*(/)
 {% endhighlight %}
 
 This is quite well known but it's worth mentioning:
@@ -196,10 +205,25 @@ vimdiff file{,.bak}
 ise to use empty mach to edit regular file as well as it .bak version. Menu
 completion works very well with this.
 
-There is a lot of more to it. I recomend you watching [great
+There is a lot of more to it. You can search basing on modification time,
+permissions, owners, etc. I recomend you watching [great
 video](http://openclassroom.stanford.edu/MainFolder/VideoPage.php?course=PracticalUnix&video=zsh-globbing)
 on this topic as well as reding [one of many
-cheatsheats](https://github.com/gaving/wisdom/blob/master/data/zsh-glob).
+cheatsheats on globs](https://github.com/gaving/wisdom/blob/master/data/zsh-glob).
+
+There is also thing called parameter expanstion that allows you to act on
+parameters (capitalization, head of directory, uppercase, substitute, etc).
+
+{% highlight sh %}
+echo =zsh #=>/bin/zsh
+echo ${${:-=zsh}:h} #=>/bin
+FOO=bar
+echo ${FOO:u} #=>BAR
+{% endhighlight %}
+
+I don't use the above  very often. If you are interested check [Zsh
+Docs](http://zsh.sourceforge.net/Doc/Release/Expansion.html#Parameter-Expansion)
+or [Zsh Wiki](http://zshwiki.org/home/scripting/paramflags).
 
 ### Mass renaming via zmv
 
@@ -244,6 +268,11 @@ As an excerise I recommend you searching it in Zsh man pagaes. Use `man
 zshoptions` or `man zshall`.
 
 ## Bindings
+
+To create you own binding use
+[bindkey](http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Zle-Builtins).
+Most interesting things you can bind are [ZLE
+widgets](http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Zle-Widgets).
 
 ### Edit current line in text editor
 
@@ -402,6 +431,11 @@ zle -N zle-line-finish
 
 It's possible thanks to powerful [Zsh Line
 Editor](http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html).
+
+## Resources
+
+* [zsh-lovers](http://grml.org/zsh/zsh-lovers.html)
+* [Zsh Advent Calendar](http://www.refining-linux.org/categories/13/Advent-calendar-2011/)
 
 
 ## Afterword
