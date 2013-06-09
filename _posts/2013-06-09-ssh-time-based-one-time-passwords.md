@@ -144,7 +144,7 @@ I recommend digging into code of oath-toolkit. Especially the [PAM
 module](http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/pam_oath/pam_oath.c)
 and the [file mentioned
 earlier](http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/liboath/usersfile.c).
-PAM simplicity is astonishing. I learned also of <tt>strtok<tt> library
+PAM simplicity is astonishing. I learned also of <tt>strtok</tt> library
 function that comes in handy.
 
 That's it. There's nothing more. You are fine to go and boast off.
