@@ -13,6 +13,8 @@
         <link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="/assets/pygments/monokai.css" rel="stylesheet">
         <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Marcellus' rel='stylesheet' type='text/css'>
 
         <link rel="shortcut icon" href="/favicon.png">
 
@@ -20,7 +22,7 @@
     </head>
 
     <body>
-
+    <div id="wrapper-outter">
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="container">
@@ -35,27 +37,28 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="content-wrapper">
+            <div class="container">
 
-            <div class="content">
-                {{ content }}
-            </div>
+                <div class="content">
+                    {{ content }}
+                </div>
 
 
-        </div> <!-- /container -->
+            </div> <!-- /container -->
+        </div>
 
 
         <footer>
-        <span />
             <div class="container">
                 <div class="row">
                     <div class="span3">
                         <h3>Find me</h3>
                         <ul class="unstyled">
-                            <li><a href="https://github.com/{{ site.author.github }}">Github</a></li>
-                            <li><a href="https://twitter.com/#!/{{ site.author.twitter }}">Twitter</a></li>
-                            <li><a href="https://plus.google.com/u/0/109133945230023093646/">Google+</a></li>
-                            <li><a href="http://www.linkedin.com/pub/arkadiusz-hiler/4a/25a/621">LinkedIn</a></li>
+                            <li><i class="icon-github-alt"></i> <a href="https://github.com/{{ site.author.github }}">Github</a></li>
+                            <li><i class="icon-twitter"></i> <a href="https://twitter.com/#!/{{ site.author.twitter }}">Twitter</a></li>
+                            <li><i class="icon-google-plus"></i> <a href="https://plus.google.com/u/0/109133945230023093646/">Google+</a></li>
+                            <li><i class="icon-linkedin"></i> <a href="http://www.linkedin.com/pub/arkadiusz-hiler/4a/25a/621">LinkedIn</a></li>
                         </ul>
                         
                     </div>
@@ -69,7 +72,7 @@
                     <div class="span6">
                         <h3>About</h3>
                         <div class="about">
-                            I'm fighting in informatics field. My wepons of choice are C, Java, Ruby, Scala and *nix systems. They are sharp and deadly thanks to Vim and ZSH. Beware.
+                            I'm programmer but I'm not afraid of databases and system administration. My wepons of choice are C, Java, Ruby, Scala and *nix systems. They are sharp and deadly thanks to Vim and ZSH. Beware.
                         </div>
                             
                     </div>
@@ -84,12 +87,13 @@
                             <span class="wq">
                                 :wq▮
                             </span>
+                            </p>
                         </div>
-                        </p>
                     </div>
                 </div>
             </div>
             </footer>
             {% include JB/analytics %}
+        </div>
         </body>
     </html>

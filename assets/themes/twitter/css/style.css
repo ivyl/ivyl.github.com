@@ -1,11 +1,19 @@
 /* Override some defaults */
 html, body {
   background-color: #eee;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 .navbar {
   margin-bottom: 0;
 }
 
+.navbar-inner {
+    -webkit-border-radius: 0px 0px 4px 4px;
+    -moz-border-radius: 0px 0px 4px 4px;
+    border-radius: 0px 0px 4px 4px;
+}
 /* The white background content wrapper */
 .content {
   background-color: #fff;
@@ -77,11 +85,23 @@ footer .wq {
 }
 
 footer {
+    position: absolute;
+    bottom: 0;
     color: #aaa;
     border-top: 3px solid #333;
     background-color: #222;
     width: 100%;
     margin-top: 20px;
+    height: 150px;
+}
+
+.content-wrapper {
+    padding-bottom: 190px;
+}
+
+#wrapper-outter {
+    min-height: 100%;
+    position: relative;
 }
 
 footer .down {

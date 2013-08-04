@@ -12,17 +12,6 @@ title: Blag
   {% endfor %}
 </ul>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
-
 ## My configuration files
 [vim](https://github.com/ivyl/vim-config)
 [zsh](https://github.com/ivyl/zsh-config)
