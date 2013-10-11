@@ -127,3 +127,7 @@ footer .about {
     font-size: 85%;
     color: #777;
 }
+
+.index_post_date {
+    font-family: Menlo, Monaco, "Courier New", monospace;
+}
