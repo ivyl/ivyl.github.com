@@ -126,14 +126,13 @@ start at boot time.
 
 ## The Token App
 
-I use [Android
-Token](https://play.google.com/store/apps/details?id=uk.co.bitethebullet.android.token)
-which is [open](https://code.google.com/p/androidtoken/). I won't describe
-whole process of adding key, since it's straightforward. Just choose type,
-token size and enter key.
+I use [Google
+Authenticator](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2).
+There are few quirks though. It supports only 30 second time based passwords,
+and it expects secret in base32 form (not as hexadecimal representation).
 
-If you need to synchronize date using NTP use something like
-[ClockSync](https://play.google.com/store/apps/details?id=ru.org.amip.ClockSync)
+I wrote simple [hex2base32.rb](https://gist.github.com/ivyl/7428982) to aid
+me in conversion.
 
 You can find something similar for most mobile platforms, or you just can use
 sequential passwords and generate few in advance by <tt>oathtool</tt>.
