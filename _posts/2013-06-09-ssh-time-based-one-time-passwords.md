@@ -82,14 +82,14 @@ I recommend using SHA1 of some random data:
 head -c 2048 /dev/urandom | openssl sha1
 {% endhighlight %}
 
-HTOP is sequentional 6 digit key by default. I had trouble finding in
+HOTP is sequentional 6 digit key by default. I had trouble finding in
 documentation way to use Time-Based Tokens so I read [usersfile parsing
 code](http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/liboath/usersfile.c)
 which gave me idea how to do this.
 
-For sequential token: <tt>HTOP = HTOP/E = HTOP/E/6</tt>
+For sequential token: <tt>HOTP = HOTP/E = HOTP/E/6</tt>
 
-For 30s Time-Based Token: <tt>HTOP/T30 = HTOP/T30/6</tt>
+For 30s Time-Based Token: <tt>HOTP/T30 = HOTP/T30/6</tt>
 
 6 stands for token length. There is also <tt>T60</tt> variant. Available
 token lengths are 6, 7 and 7.
@@ -97,7 +97,7 @@ token lengths are 6, 7 and 7.
 In my case I have something like:
 
 {% highlight text %}
-HTOP/T30 ivyl - bbad0952f0a72626e216e206d121e314c3ee1700
+HOTP/T30 ivyl - bbad0952f0a72626e216e206d121e314c3ee1700
 {% endhighlight %}
 
 Usersfile should not be readable or writable by non-root, so
