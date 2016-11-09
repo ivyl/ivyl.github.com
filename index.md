@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Blag
+title: INDEX
 ---
 {% include JB/setup %}
 
@@ -12,17 +12,13 @@ title: Blag
   {% endfor %}
 </ul>
 
-## My configuration files
-[vim](https://github.com/ivyl/vim-config)
-[zsh](https://github.com/ivyl/zsh-config)
+## ReSources
+
+**Dotfiles:**
+[zsh](https://github.com/ivyl/zsh-config) |
+[neovim](https://github.com/ivyl/vim-config) |
 [i3](https://github.com/ivyl/i3-config)
 
-I found myself often searching for inspiration when working on my dotfiles.
-Often I just copy parts of others' files into mine. So here are they - work of
-dozens of people (including me!) merged together. As my contribution I share
-them with comprehensive READMEs. Enjoy!
+**Blag's source**: <https://github.com/ivyl/ivyl.github.com>
 
-## Credits
-[Blag's source](https://github.com/ivyl/ivyl.github.com) is available.
 
-I'm using [Jekyll](https://github.com/mojombo/jekyll) and [JekyllBootstrap](http://jekyllbootstrap.com/).
