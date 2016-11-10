@@ -4,3 +4,5 @@ _theme_packages/*
 !.gitkeep
 
 .rbenv-version
+
+Gemfile.lock
