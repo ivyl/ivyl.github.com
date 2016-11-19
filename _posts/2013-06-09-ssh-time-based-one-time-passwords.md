@@ -5,148 +5,172 @@ tags: [unix, security]
 ---
 {% include JB/setup %}
 
+
+*"I do not alway log in remotely through unsafe machines, but when I do, I do
+it as securely as possible."*
+
+
 ## Intro
 
-*I don't alway log in remotely using passwords on unsafe machine, but when I
-do, I make sure it's secure.*
+In order to keep my systems safe, even in case the passwords had been
+overheard/peeped/logged, I use 2-step authentication.
 
-In order to be certain my system is safe, even if my password had been
-overheard/peeped/logged, I use 2-step authentication using Time-Based
-One-Time Passwords. There are few implementations of this idea available.
-Reading through I have chosen OATH.
+You should too.
 
-I alway carry my phone, on which I have installed app that generates tokens.
-I make sure that time is synced up using carrier synchronization on Android
-and NTP on servers (you could use NTP on phone your carrier sucks). And now I
-can log in from anywhere using current token along with my password that I
-change on regular basis.
+I prefer [Time-Based One-Time Passwords][totp_rfc] instead of the one that
+[increments the counter][hotp_rfc]. There are quite a few implementations of
+this idea available. Reading through I have chosen to go with [OATH][oath]
+which is industry-wide effort to provide such solutions basing on open
+standards.
+
+I alway carry my phone with me, so it was natural candidate to serves me as
+token generator. I have installed and FOSS app, [FreeOTP][freeotp], that
+generates the tokens.
+
+Also, since it's all time based, I made sure that clocks on the devices are
+synced up - I am using carrier synchronization on my phone and NTP clients are
+running on the servers.
+
 
 ## OATH
 
-[OATH](http://en.wikipedia.org/wiki/Initiative_For_Open_Authentication) is
-open standard, with well described algorithms (as RFCs), reference
-architecture is available and much more resources. That's the thing that
-Amazon use.
+You should install [oath-toolkit][oath_toolkit], which is provides some
+components and libraries we are going to use, including PAM module to handle
+the authentication.
 
-You should install [oath-toolkit](http://www.nongnu.org/oath-toolkit/), which
-is OATH implementation for unix-like systems using PAM:
-
-{% highlight bash %}
+```bash
 portmaster security/oath-toolkit
-{% endhighlight %}
+dnf install oath-toolkit
+pacman -S oath-toolkit
+```
 
-Or however your religion requires you to.
+Or however it's done in your *religion*.
+
 
 ## PAM
 
-Now it's time to configure PAM. In <tt>/etc/pam.d/</tt> there should be files
-corresponding to login method, such as <tt>sshd</tt>, <tt>su</tt>, etc. I
-first had tested changes on <tt>su</tt> (or <tt>su-l</tt> on some systems,
-for login onto other user) and after that finally merged them into
-<tt>sshd</tt> configuration file.
+In `/etc/pam.d/` you should find files corresponding to logging in method, such
+as `sshd`, `su`, etc.
 
-I added auth module as *requisite* (see <tt>man pam.conf</tt> for details) on
-top of configuration file. **On FreeBSD** I had to specify full path to the module.
+I added auth module as *requisite* (see `man pam.conf` for details) on
+top of ssh one.
 
-{% highlight text %}
+```
 auth requisite /usr/local/lib/security/pam_oath.so usersfile=/etc/users.oath
-{% endhighlight %}
+```
 
-**On most Linux** distributions, if oath-toolkit is installed from package
-<tt>pam_oath.so</tt> should be sufficient.
+**On FreeBSD** I had to specify full path to the module.
 
-From now on you will be asked for token first, and then for your password.
+**On most Linux** distributions, if oath-toolkit is installed through package
+manager using `pam_oath.so` instead of full path should be sufficient.
+
+You can go with *required* instead of *requisite* if you don't want to reveal
+whether the OTP was correct straight away.
+
+From now on you will be asked for OTP first, and then for you'll have to
+provide your regular password.
+
 
 ## The Userfile
 
-The *usersfile* I pointed OATH module to is <tt>/etc/users.oath</tt>. Example provided in
-documentation is very brief:
+The **usersfile** I pointed OATH module to is `/etc/users.oath`.
 
-{% highlight text %}
+**Fedora caveat:** use `/etc/liboath/` directory, due to selinux permissions.
+
+Example provided in documentation is very brief:
+
+```
 HOTP root - 00
-{% endhighlight %}
+```
+
+Too brief, I would say. It took me some research (actually reading through
+source code) to make sense of the syntax.
+
+White spaces are threated as delimiter, and fields are:
+
+* **first** is auth method,
+* **second** is user name
+* **third** would be used if we would like to have additional password
+  provided along with the token (since in this case PAM will ask us for
+  the regular password just after token, we are okay with none using value `-`)
+* **fourth field** is the secret used to generate tokens, in hexadecimal format.
+* **fields after that** would contain last password used (so it can't be
+  reused straight away) as well as the counter regular HOTP
 
 
-Too brief I would say. It took me some research (actually looking into source
-code) to make sense of it.
+I recommend using SHA1 of a random data as a secret:
 
-White spaces are threated as delimiter. **First field** is auth method, **second** is
-user name, **third field** would be used if we need password to be provided along
-with token, since in this case PAM will ask us for password just after token,
-we are okay with none (<tt>-</tt>). **Last field** is key in hexadecimal format.
-
-
-I recommend using SHA1 of some random data:
-
-{% highlight bash %}
+```bash
 head -c 2048 /dev/urandom | openssl sha1
-{% endhighlight %}
+```
 
 HOTP is sequentional 6 digit key by default. I had trouble finding in
 documentation way to use Time-Based Tokens so I read [usersfile parsing
-code](http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/liboath/usersfile.c)
-which gave me idea how to do this.
+code][oath_userfile_source] which gave me idea how to do this.
 
-For sequential token: <tt>HOTP = HOTP/E = HOTP/E/6</tt>
+For sequential token: `HOTP = HOTP/E = HOTP/E/6`
 
-For 30s Time-Based Token: <tt>HOTP/T30 = HOTP/T30/6</tt>
+For 30s Time-Based Token: `HOTP/T30 = HOTP/T30/6`
 
-6 stands for token length. There is also <tt>T60</tt> variant. Available
-token lengths are 6, 7 and 7.
+6 stands for token length. There is also `T60` variant. Valid
+token lengths are 6, 7 and 8.
 
-In my case I have something like:
+In my case I have something in the lines of:
 
-{% highlight text %}
+```
 HOTP/T30 ivyl - bbad0952f0a72626e216e206d121e314c3ee1700
-{% endhighlight %}
+```
 
-Usersfile should not be readable or writable by non-root, so
+Usersfile should not be readable or writable by non-root, so just do
 
-{% highlight text %}
+```
 chmod go-rw /etc/users.oath
-{% endhighlight %}
-
-seems like a good idea.
+```
 
 ## SSH
 
-Make sure that following options are present in you <tt>sshd_config</tt>:
+Make sure that following options are present in you `sshd_config`:
 
-{% highlight ruby %}
+```ruby
 ChallengeResponseAuthentication yes
 PasswordAuthentication yes
-{% endhighlight %}
+```
 
-Restart <tt>sshd</tt>.
+Otherwise the OTP challenge won't appear while logging in.
 
-## NTP
-
-Remember to use NTP to sync your clock! I recommend enabling <tt>ntpd</tt> to
-start at boot time.
 
 ## The Token App
 
-I use [Google
-Authenticator](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2).
-There are few quirks though. It supports only 30 second time based passwords,
-and it expects secret in base32 form (not as hexadecimal representation).
+I use [FreeOTP][freeotp]. The secret should be base32 encoded (instead of
+simple hexadecimal dump)... You can use `oathtool` provided with the
+oath-toolkit to do the conversion.
 
-I wrote simple [hex2base32.rb](https://gist.github.com/ivyl/7428982) to aid
-me in conversion.
+```bash
+oathtool -v $(read foo; echo $foo)
+```
 
-You can find something similar for most mobile platforms, or you just can use
-sequential passwords and generate few in advance by <tt>oathtool</tt>.
+And paste the hexadecimal secret.
+
 
 ## Afterthoughts
 
 I recommend digging into code of oath-toolkit. Especially the [PAM
-module](http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/pam_oath/pam_oath.c)
-and the [file mentioned
-earlier](http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/liboath/usersfile.c).
-PAM simplicity is astonishing. I learned also of <tt>strtok</tt> library
-function that comes in handy.
+module][oath_pam_source]. PAM simplicity is astonishing.
 
-That's it. There's nothing more. You are fine to go and boast off.
+Also read through [HOTP][hotp_rfc] and [TOTP][totp_rfc] RFCs.
 
 
+## UPDATES:
+
+* <tt>20161119</tt> - general overhaul
+
+
+[hex2base32]: https://gist.github.com/ivyl/7428982
+[oath]: http://www.nongnu.org/oath-toolkit/
+[oath_toolkit]: http://www.nongnu.org/oath-toolkit/
+[oath_userfile_source]: http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/liboath/usersfile.c
+[oath_pam_source]: http://git.savannah.gnu.org/cgit/oath-toolkit.git/tree/pam_oath/pam_oath.c
+[totp_rfc]: https://tools.ietf.org/html/rfc6238
+[hotp_rfc]: https://tools.ietf.org/html/rfc4226
+[freeotp]: https://freeotp.github.io/
 
